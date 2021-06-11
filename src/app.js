@@ -41,7 +41,12 @@ const removePrefix = (prefix, sentence) => {
     throw new Error('invalid types')
 }
 
-
+/**
+ * validate that the data to be string and return an object
+ * 
+ * @param {string} data 
+ * @returns 
+ */
 const StringValidator = (data) => {
     if (typeof data === 'string') {
         return {
@@ -52,6 +57,14 @@ const StringValidator = (data) => {
     throw new Error('invalid types');
 }
 
+/**
+ * call cb after validating data types
+ * 
+ * @param {number} a 
+ * @param {number} b 
+ * @param {function} cb 
+ * @returns 
+ */
 const doAddForTwoNums = (a, b, cb) => {
     if (typeof a === 'number' && typeof b === 'number' && typeof cb === 'function') {
         cb(a + b)
@@ -60,7 +73,11 @@ const doAddForTwoNums = (a, b, cb) => {
     throw new Error('invalid types')
 }
 
-
+/**
+ * returns an promise which is resolved by returning an object after a sec
+ * 
+ * @returns {object}
+ */
 const fetchDataSimulator = () => {
     return new Promise((resolve, reject) => {
         let wait = setTimeout(() => {
@@ -70,6 +87,11 @@ const fetchDataSimulator = () => {
     })
 }
 
+/**
+ * simulate data fetcing
+ * 
+ * @returns 
+ */
 const getData = async () => {
     return fetchDataSimulator().then(res => res)
 }
