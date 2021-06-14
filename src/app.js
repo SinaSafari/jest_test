@@ -1,3 +1,5 @@
+const crypto = require("crypto");
+
 /**
  * this functions tries to returns summation of these two numbers
  *
@@ -88,10 +90,48 @@ const getData = async () => {
   return fetchDataSimulator().then((res) => res);
 };
 
+// array sort
+/**
+ * sort array
+ *
+ * @param {Array} arr
+ */
+const sorter = (arr) => {
+  if (new Set(arr.map((x) => typeof x)).size <= 1) {
+    return arr.sort((a, b) => {
+      return a - b;
+    });
+  }
+  throw new Error("invalid types");
+};
+
+const checkEmailPassword = (email, password) => {
+  // const = /^[\w-\.]+@([\w-]+\.)[w\-]{2,4}$/
+  const emailPattern = /\S+@\S+\.\S+/;
+  const alphanumericPattern = /^[a-zA-Z0-9]+$/g;
+
+  if (!emailPattern.test(email)) {
+    throw new Error("invalid email");
+  }
+  if (!alphanumericPattern.test(password) && password.length >= 6) {
+    throw new Error("invalid password");
+  }
+
+  const newPassword = crypto.createHash("sha256", password).digest("hex");
+
+  return {
+    email: email,
+    password: newPassword,
+  };
+};
+// console.log(sorter([2, 100, 0]))
+
 module.exports = {
   sumTwoNumbers,
   removePrefix,
   apiSimolator,
   doAddForTwoNums,
   getData,
+  sorter,
+  checkEmailPassword,
 };
