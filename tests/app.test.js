@@ -4,7 +4,9 @@ const {
     sumTwoNumbers,
     StringValidator,
     doAddForTwoNums,
-    getData
+    getData,
+    sorter,
+    checkEmailPassword,
 } = require('../src/app')
 const Calculator = require('../src/Calculator')
 
@@ -151,6 +153,43 @@ describe('app.js tests', () => {
                 expect(res).toHaveProperty('title')
                 expect(res.title).toEqual('hello world')
             })
+        })
+    })
+
+    describe('sorter functionlaity', () => {
+        it('should be sorted', () => {
+            const sampleData = [2, 100, 0]
+            const res = sorter(sampleData)
+            expect(res).toEqual([0, 2, 100])
+        })
+
+        it('should throw error with string as input', () => {
+            const sampleData = ["1", "a", true]
+            expect(() => sorter(sampleData)).toThrow(INVALID_TYPES_ERR_MSG)
+        })
+    })
+
+
+    describe('email and password check', () => {
+        it('should return an object containing email and password', () => {
+            const data = { email: "hello@hi.com", password: "123456" }
+            const res = checkEmailPassword(data.email, data.password)
+            expect(res).toEqual(
+                expect.objectContaining({
+                    email: data.email,
+                    password: expect.any(String)
+                })
+            )
+        })
+
+        it('should throw error for invalid email', () => {
+            const data = { email: "hi.com", password: "123456" }
+            expect(() => checkEmailPassword(data.email, data.password)).toThrow('invalid email')
+        })
+
+        it('should throw error for invalid password', () => {
+            const data = { email: "test@test.com", password: "hello!" }
+            expect(() => checkEmailPassword(data.email, data.password)).toThrow('invalid password')
         })
     })
 
